@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <h1 style={{ display: "flex", justifyContent: "center" }}>
-        Vite + React + plotly
+        Scientific Plots
       </h1>
       <Box
         sx={{
