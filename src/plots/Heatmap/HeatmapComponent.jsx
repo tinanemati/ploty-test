@@ -6,7 +6,7 @@ import {
   getShape,
   getPlotConfiguration,
 } from "./heatmapHelpers";
-import data from "../../test-data.json";
+import axios from "axios";
 
 function HeatmapComponent({
   configValue,
@@ -42,23 +42,23 @@ function HeatmapComponent({
     [setZMin, setZMax, setMinLimit, setMaxLimit]
   );
 
-  // Hook to get data from json file
+  // Hook to get data from flask server
   useEffect(() => {
-    const xData = data.columns;
-    const yData = data.index;
-    const zData = data.values;
-
-    // update the states used for rendering
-    setArrayX(xData);
-    setArrayY(yData);
-    setArrayZ(zData);
-    setHorizontalLinePosition(yData[0]);
-    setYdata(zData[0]);
-    setXdata(xData);
-
-    // calculate min and max values
-    calculateMinMaxValues(zData);
-  }, [calculateMinMaxValues]);
+    const fetchWellData = async () => {
+      const response = await axios.get("http://127.0.0.1:7000/well");
+      const wellData = response.data.wellData;
+      // update the states used for rendering
+      setArrayX(wellData.columns);
+      setArrayY(wellData.index);
+      setArrayZ(wellData.values);
+      setHorizontalLinePosition(wellData.index[0]);
+      setYdata(wellData.values[0]);
+      setXdata(wellData.columns);
+      // calculate min and max values
+      calculateMinMaxValues(wellData.values);
+    };
+    fetchWellData();
+  }, []);
 
   const handleHover = (data) => {
     if (hoverActive) {
