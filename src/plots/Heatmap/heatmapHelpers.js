@@ -1,3 +1,5 @@
+import { performBaselineCorrection } from "../../api/axios";
+
 const findMinMaxValues = (zData) => {
   let min = zData[0][0];
   let max = zData[0][0];
@@ -66,4 +68,21 @@ const getPlotConfiguration = (
   };
 };
 
-export { findMinMaxValues, getShape, getPlotConfiguration };
+const getDefaultBaseline = async (xData, yData, setBaseline, setYdataUpdated, setBaselineUpdated) => {
+  const dataToSend = {
+    xData: xData,
+    yData: yData
+  }
+
+  const result = await performBaselineCorrection(dataToSend)
+  if (result.success) {
+    // update baseline, values and columns 
+    setBaseline(result.baseline);
+    setYdataUpdated(result.yValues);
+    setBaselineUpdated(true)
+  } else {
+    console.error(result.message);
+  }
+}
+
+export { findMinMaxValues, getShape, getPlotConfiguration, getDefaultBaseline };

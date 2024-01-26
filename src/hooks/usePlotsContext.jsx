@@ -7,6 +7,9 @@ export const PlotsProvider = ({ children }) => {
   const [yData, setYdata] = useState([]);
   const [horizontalLinePosition, setHorizontalLinePosition] = useState(null);
   const [sliceSelected, setSliceSelected] = useState(false);
+  const [yDataUpdated, setYdataUpdated] = useState([]);
+  const [baseline, setBaseline] = useState([]);
+  const [baselineUpdated, setBaselineUpdated] = useState(false);
 
   return (
     <PlotsContext.Provider
@@ -19,6 +22,12 @@ export const PlotsProvider = ({ children }) => {
         setHorizontalLinePosition,
         sliceSelected,
         setSliceSelected,
+        yDataUpdated,
+        setYdataUpdated,
+        baseline,
+        setBaseline,
+        baselineUpdated,
+        setBaselineUpdated
       }}
     >
       {children}

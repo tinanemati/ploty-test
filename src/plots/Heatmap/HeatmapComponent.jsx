@@ -5,6 +5,7 @@ import {
   findMinMaxValues,
   getShape,
   getPlotConfiguration,
+  getDefaultBaseline
 } from "./heatmapHelpers";
 import axios from "axios";
 
@@ -23,12 +24,22 @@ function HeatmapComponent({
     setYdata,
     setXdata,
     setSliceSelected,
+    setBaseline,
+    setYdataUpdated,
+    setBaselineUpdated
   } = usePlotsContext();
 
   const [arrayX, setArrayX] = useState([]);
   const [arrayY, setArrayY] = useState([]);
   const [arrayZ, setArrayZ] = useState([]);
   const [hoverActive, setHoverActive] = useState(true);
+
+  const getBaseline = useCallback(
+    (xData, yData) => {
+      getDefaultBaseline(xData, yData, setBaseline, setYdataUpdated, setBaselineUpdated);
+    },
+    [setBaseline, setYdataUpdated, setBaselineUpdated] 
+  );
 
   const calculateMinMaxValues = useCallback(
     (zData) => {
@@ -76,6 +87,8 @@ function HeatmapComponent({
       const yValue = arrayY[clickedPointIndex];
       setHorizontalLinePosition(yValue);
       setYdata(arrayZ[clickedPointIndex]);
+      // perform deafault baseline correction
+      getBaseline(arrayX, arrayZ[clickedPointIndex]);
       // Disable hover after click
       setHoverActive(false);
       // indicate that slice was slected
