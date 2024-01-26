@@ -4,7 +4,6 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 function Heatmapconfig({ configValue, updateConfigValue }) {
-  //console.log("I renderd");
   const options = [
     "Select (m/z) slices",
     "Zoom",

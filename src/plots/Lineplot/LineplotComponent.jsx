@@ -1,17 +1,12 @@
-import React from "react";
+import React, { memo } from "react";
 import Plot from "react-plotly.js";
 import { usePlotsContext } from "../../hooks/usePlotsContext";
 
-// const { sliceSelected, setSliceSelected, xData, yData } = usePlotsContext();
-export default function LinePlotComponent({ configValue }) {
-  const { yData, xData, horizontalLinePosition, sliceSelected } =
-    usePlotsContext();
+function LinePlotComponent({ configValue }) {
+  const { yData, xData, horizontalLinePosition } = usePlotsContext();
 
   const renderLinePlot = () => {
     // Extract plot's title, label and configuration
-    const yaxisTitle = sliceSelected
-      ? `Ion Count (m/z=${horizontalLinePosition})`
-      : "Ion Count";
     const scrollZoom = configValue === "Zoom" ? true : false;
     const dragMode = configValue === "Zoom" ? "zoom" : false;
 
@@ -45,7 +40,7 @@ export default function LinePlotComponent({ configValue }) {
             dtick: 0.5,
           },
           yaxis: {
-            title: yaxisTitle,
+            title: `Ion Count (m/z=${horizontalLinePosition})`,
             zeroline: false,
           },
           dragmode: dragMode,
@@ -57,3 +52,5 @@ export default function LinePlotComponent({ configValue }) {
   };
   return renderLinePlot();
 }
+
+export default memo(LinePlotComponent);
