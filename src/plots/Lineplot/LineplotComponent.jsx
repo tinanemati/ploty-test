@@ -1,5 +1,6 @@
 import React, { memo, useCallback, useEffect } from "react";
-import Plot from "react-plotly.js";
+import createPlotlyComponent from "react-plotly.js/factory";
+import Plotly from"plotly.js-cartesian-dist-min";
 import { usePlotsContext } from "../../hooks/usePlotsContext";
 import {
   getPlotConfiguration,
@@ -7,6 +8,8 @@ import {
   performBaselineCorrectionHelper,
   getBaselineShape,
 } from "./lineplotHelper";
+
+const Plot = createPlotlyComponent(Plotly);
 
 function LinePlotComponent({
   configValue,

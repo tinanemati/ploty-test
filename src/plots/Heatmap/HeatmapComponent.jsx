@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, memo } from "react";
-import Plot from "react-plotly.js";
+import createPlotlyComponent from "react-plotly.js/factory";
+import Plotly from "plotly.js-cartesian-dist-min";
 import { usePlotsContext } from "../../hooks/usePlotsContext";
 import {
   findMinMaxValues,
@@ -8,6 +9,8 @@ import {
   getDefaultBaseline
 } from "./heatmapHelpers";
 import axios from "axios";
+
+const Plot = createPlotlyComponent(Plotly);
 
 function HeatmapComponent({
   configValue,
