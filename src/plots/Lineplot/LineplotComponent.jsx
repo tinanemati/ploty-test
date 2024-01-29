@@ -165,6 +165,7 @@ function LinePlotComponent({
           yaxis: {
             title: `Ion Count (m/z=${horizontalLinePosition})`,
             zeroline: false,
+            fixedrange: true,
           },
           dragmode: dragMode,
           showlegend: false,
