@@ -123,6 +123,7 @@ function LinePlotComponent({
     let baselineShape;
 
     yDataChannel = sliceSelected ? yDataChannel : yData;
+    let yFixed = configValue === "Integration" ? true : false;
 
     if (configValue !== "Integration" && configValue !== "Zoom") {
       if (baselineTimeRange.length === 0 && sliceSelected) {
@@ -165,7 +166,7 @@ function LinePlotComponent({
           yaxis: {
             title: `Ion Count (m/z=${horizontalLinePosition})`,
             zeroline: false,
-            fixedrange: true,
+            fixedrange: yFixed,
           },
           dragmode: dragMode,
           showlegend: false,

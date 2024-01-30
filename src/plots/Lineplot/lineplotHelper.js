@@ -14,11 +14,10 @@ const getPlotConfiguration = (
   let dragMode = false;
   let doubleClickHandler = () => {};
   let clickHandler = () => {};
-  if (configValue === "Zoom") {
+  if (configValue === "Zoom" || configValue === "Integration") {
     scrollZoom = true;
     dragMode = true;
-  }
-
+  } 
   if (configValue === "Baseline") {
     doubleClickHandler = handleDoubleClickBaseline;
     clickHandler = handleClickBaseline;
