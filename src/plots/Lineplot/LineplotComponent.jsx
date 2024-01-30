@@ -139,10 +139,14 @@ function LinePlotComponent({
       size,
       doubleClickHandler,
       clickHandler,
+      deSelectHandler,
+      selectHandler,
     } = getPlotConfiguration(
       configValue,
       handleDoubleClickBaseline,
+      handleDeselct,
       handleClickBaseline,
+      handleSelected,
       xData,
       pointClicked
     );
@@ -181,7 +185,7 @@ function LinePlotComponent({
               width: 1,
             },
           },
-          ...(range.length > 0
+          ...(range.length > 0 && configValue === "Integration"
             ? range.map((item, index) => ({
                 x: xData.slice(item.pointIndex[0], item.pointIndex[1]+1),
                 y: yDataUpdated.slice(item.pointIndex[0], item.pointIndex[1]+1),
@@ -217,8 +221,8 @@ function LinePlotComponent({
         config={{ scrollZoom: scrollZoom, displayModeBar: false }}
         onClick={clickHandler}
         onDoubleClick={doubleClickHandler}
-        onSelected={handleSelected}
-        onDeselect={handleDeselct}
+        onSelected={selectHandler}
+        onDeselect={deSelectHandler}
       />
     );
   };

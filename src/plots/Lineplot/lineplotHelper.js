@@ -3,7 +3,9 @@ import { performBaselineCorrection } from "../../api/axios";
 const getPlotConfiguration = (
   configValue,
   handleDoubleClickBaseline,
+  handleDeselct,
   handleClickBaseline,
+  handleSelected,
   xDataArray,
   pointClickedArray
 ) => {
@@ -15,6 +17,8 @@ const getPlotConfiguration = (
   let yFixed = false;
   let direction = "any";
   let doubleClickHandler = () => {};
+  let selectHandler = () => {};
+  let deSelectHandler = () => {};
   let clickHandler = () => {};
   if (configValue === "Zoom") {
     scrollZoom = true;
@@ -27,6 +31,9 @@ const getPlotConfiguration = (
   if (configValue === "Baseline") {
     doubleClickHandler = handleDoubleClickBaseline;
     clickHandler = handleClickBaseline;
+  } else if (configValue === "Integration") {
+    deSelectHandler = handleDeselct;
+    selectHandler = handleSelected;
   }
 
   const markerColors = xDataArray.map((_, index) =>
@@ -48,6 +55,8 @@ const getPlotConfiguration = (
     direction,
     doubleClickHandler,
     clickHandler,
+    deSelectHandler,
+    selectHandler,
     size,
     color,
   };
