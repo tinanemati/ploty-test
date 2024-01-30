@@ -58,6 +58,9 @@ function LinePlotComponent({
     setBaselineUpdated(false);
   };
 
+  const handleSelected = (event) => {
+    console.log("I was called", event)
+  }
   const getBaselineCorrection = useCallback(
     (start, end) => {
       performBaselineCorrectionHelper(
@@ -107,6 +110,8 @@ function LinePlotComponent({
     const {
       scrollZoom,
       dragMode,
+      yFixed,
+      direction,
       color,
       size,
       doubleClickHandler,
@@ -123,7 +128,6 @@ function LinePlotComponent({
     let baselineShape;
 
     yDataChannel = sliceSelected ? yDataChannel : yData;
-    let yFixed = configValue === "Integration" ? true : false;
 
     if (configValue !== "Integration" && configValue !== "Zoom") {
       if (baselineTimeRange.length === 0 && sliceSelected) {
@@ -169,12 +173,14 @@ function LinePlotComponent({
             fixedrange: yFixed,
           },
           dragmode: dragMode,
+          selectdirection: direction,
           showlegend: false,
           shapes: baselineShape,
         }}
         config={{ scrollZoom: scrollZoom, displayModeBar: false }}
         onClick={clickHandler}
         onDoubleClick={doubleClickHandler}
+        onSelected={handleSelected}
       />
     );
   };

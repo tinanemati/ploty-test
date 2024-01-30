@@ -12,12 +12,18 @@ const getPlotConfiguration = (
   let color = "#000";
   let scrollZoom = false;
   let dragMode = false;
+  let yFixed = false;
+  let direction = "any";
   let doubleClickHandler = () => {};
   let clickHandler = () => {};
-  if (configValue === "Zoom" || configValue === "Integration") {
+  if (configValue === "Zoom") {
     scrollZoom = true;
-    dragMode = true;
-  } 
+    dragMode = "zoom";
+  } else if (configValue === "Integration") {
+    dragMode = "select";
+    yFixed = true;
+    direction = "h";
+  }
   if (configValue === "Baseline") {
     doubleClickHandler = handleDoubleClickBaseline;
     clickHandler = handleClickBaseline;
@@ -38,6 +44,8 @@ const getPlotConfiguration = (
   return {
     scrollZoom,
     dragMode,
+    yFixed,
+    direction,
     doubleClickHandler,
     clickHandler,
     size,
