@@ -176,6 +176,12 @@ function LinePlotComponent({
           selectdirection: direction,
           showlegend: false,
           shapes: baselineShape,
+          activeselection: {
+            fillcolor: "#fff063",
+          },
+          newselection: {
+            line: {color: "grey", width: 2, dash: "solid"}
+          } 
         }}
         config={{ scrollZoom: scrollZoom, displayModeBar: false }}
         onClick={clickHandler}
