@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useEffect, useState } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
-import Plotly from"plotly.js-cartesian-dist-min";
+import Plotly from "plotly.js-cartesian-dist-min";
 import { usePlotsContext } from "../../hooks/usePlotsContext";
 import {
   getPlotConfiguration,
@@ -9,7 +9,7 @@ import {
   getBaselineShape,
 } from "./lineplotHelper";
 
-Plotly.setPlotConfig({ logging: 0 })
+Plotly.setPlotConfig({ logging: 0 });
 const Plot = createPlotlyComponent(Plotly);
 
 function LinePlotComponent({
@@ -42,7 +42,7 @@ function LinePlotComponent({
     updatedRanges.push({ leftside: newLeft, rightside: newRight });
     setRange(updatedRanges);
   };
-  console.log("this is range:", range)
+  console.log("this is range:", range);
   const handleClickBaseline = (data) => {
     const clickedPointIndex = data.points[0].pointIndex;
 
@@ -69,14 +69,16 @@ function LinePlotComponent({
 
   const handleSelected = (event) => {
     if (event.points.length) {
-      console.log("I was called", event)
+      console.log("I was called", event);
       const xValue0 = event.points[0].pointIndex;
-      const length = event.points.length - 1
+      const length = event.points.length - 1;
       const xValue1 = event.points[length].pointIndex;
-      updateRange(xValue0, xValue1)
+      updateRange(xValue0, xValue1);
     }
-    
-   
+  };
+
+  const handleDeselct = () => {
+    setRange([])
   }
   const getBaselineCorrection = useCallback(
     (start, end) => {
@@ -177,6 +179,18 @@ function LinePlotComponent({
               width: 1,
             },
           },
+          ...(range.length > 0
+            ? range.map((item, index) => ({
+                x: xData.slice(item.leftside, item.rightside),
+                y: yDataUpdated.slice(item.leftside, item.rightside),
+                type: "scatter",
+                mode: "lines",
+                line: {
+                  color: "rgb(238,44,130)",
+                },
+                name: range[index] ? `Region ${index + 1}` : undefined,
+              }))
+            : []),
         ]}
         layout={{
           width: 950,
@@ -202,6 +216,7 @@ function LinePlotComponent({
         onClick={clickHandler}
         onDoubleClick={doubleClickHandler}
         onSelected={handleSelected}
+        onDeselect={handleDeselct}
       />
     );
   };
