@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
 import Plotly from"plotly.js-cartesian-dist-min";
 import { usePlotsContext } from "../../hooks/usePlotsContext";
@@ -9,6 +9,7 @@ import {
   getBaselineShape,
 } from "./lineplotHelper";
 
+Plotly.setPlotConfig({ logging: 0 })
 const Plot = createPlotlyComponent(Plotly);
 
 function LinePlotComponent({
@@ -34,6 +35,14 @@ function LinePlotComponent({
     sliceSelected,
   } = usePlotsContext();
 
+  const [range, setRange] = useState([]);
+  // Function to update the range at a specific index
+  const updateRange = (newLeft, newRight) => {
+    const updatedRanges = [...range];
+    updatedRanges.push({ leftside: newLeft, rightside: newRight });
+    setRange(updatedRanges);
+  };
+  console.log("this is range:", range)
   const handleClickBaseline = (data) => {
     const clickedPointIndex = data.points[0].pointIndex;
 
@@ -59,7 +68,15 @@ function LinePlotComponent({
   };
 
   const handleSelected = (event) => {
-    console.log("I was called", event)
+    if (event.points.length) {
+      console.log("I was called", event)
+      const xValue0 = event.points[0].pointIndex;
+      const length = event.points.length - 1
+      const xValue1 = event.points[length].pointIndex;
+      updateRange(xValue0, xValue1)
+    }
+    
+   
   }
   const getBaselineCorrection = useCallback(
     (start, end) => {
@@ -109,6 +126,8 @@ function LinePlotComponent({
     // Extract plot's title, label and configuration
     const {
       scrollZoom,
+      hoverMode,
+      clickMode,
       dragMode,
       yFixed,
       direction,
@@ -174,14 +193,10 @@ function LinePlotComponent({
           },
           dragmode: dragMode,
           selectdirection: direction,
+          clickmode: clickMode,
+          hovermode: hoverMode,
           showlegend: false,
           shapes: baselineShape,
-          activeselection: {
-            fillcolor: "#fff063",
-          },
-          newselection: {
-            line: {color: "grey", width: 2, dash: "solid"}
-          } 
         }}
         config={{ scrollZoom: scrollZoom, displayModeBar: false }}
         onClick={clickHandler}
