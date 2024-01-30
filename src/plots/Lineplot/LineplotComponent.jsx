@@ -37,9 +37,9 @@ function LinePlotComponent({
 
   const [range, setRange] = useState([]);
   // Function to update the range at a specific index
-  const updateRange = (newLeft, newRight) => {
+  const updateRange = (newLeftIndex, newleftValue, newRightIndex, newRightValue) => {
     const updatedRanges = [...range];
-    updatedRanges.push({ leftside: newLeft, rightside: newRight });
+    updatedRanges.push({ pointIndex: [newLeftIndex, newRightIndex], x: [newleftValue, newRightValue] });
     setRange(updatedRanges);
   };
   console.log("this is range:", range);
@@ -70,10 +70,12 @@ function LinePlotComponent({
   const handleSelected = (event) => {
     if (event.points.length) {
       console.log("I was called", event);
-      const xValue0 = event.points[0].pointIndex;
+      const xIndex0 = event.points[0].pointIndex;
+      const xValue0 = event.points[0].x;
       const length = event.points.length - 1;
-      const xValue1 = event.points[length].pointIndex;
-      updateRange(xValue0, xValue1);
+      const xIndex1 = event.points[length].pointIndex;
+      const xValue1 = event.points[length].x;
+      updateRange(xIndex0, xValue0, xIndex1, xValue1);
     }
   };
 
@@ -181,8 +183,8 @@ function LinePlotComponent({
           },
           ...(range.length > 0
             ? range.map((item, index) => ({
-                x: xData.slice(item.leftside, item.rightside),
-                y: yDataUpdated.slice(item.leftside, item.rightside),
+                x: xData.slice(item.pointIndex[0], item.pointIndex[1]),
+                y: yDataUpdated.slice(item.pointIndex[0], item.pointIndex[1]),
                 type: "scatter",
                 mode: "lines",
                 line: {
