@@ -182,7 +182,7 @@ function LinePlotComponent({
             },
           },
           ...(range.length > 0
-            ? range.map((item, _) => ({
+            ? range.map((item, index) => ({
                 x: xData.slice(item.pointIndex[0], item.pointIndex[1]+1),
                 y: yDataUpdated.slice(item.pointIndex[0], item.pointIndex[1]+1),
                 type: "scatter",
@@ -190,6 +190,7 @@ function LinePlotComponent({
                 line: {
                   color: "rgb(238,44,130)",
                 },
+                name: range[index] ? `Region ${index + 1}` : undefined,
               }))
             : []),
         ]}
