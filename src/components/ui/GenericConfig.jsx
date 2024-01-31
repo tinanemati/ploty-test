@@ -1,4 +1,5 @@
 import { memo } from "react";
+import PropTypes from "prop-types";
 import FormControl from "@mui/material/FormControl";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
@@ -51,5 +52,15 @@ function GenericConfig({
     </FormControl>
   );
 }
+
+GenericConfig.propTypes = {
+  configValue: PropTypes.string.isRequired,
+  updateConfigValue: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  backgroundColor: PropTypes.string.isRequired,
+  textColor: PropTypes.string.isRequired,
+  selectedBackgroundColor: PropTypes.string.isRequired,
+  selectedTextColor: PropTypes.string.isRequired,
+};
 
 export default memo(GenericConfig);
