@@ -1,4 +1,3 @@
-import React from "react";
 import Box from "@mui/material/Box";
 import Heatmap from "./components/plots/Heatmap/Heatmap"
 import LinePlot from "./components/plots/Lineplot/Lineplot";

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Lineplotconfig from "./LineplotConfig";
 import LinePlotComponent from "./LineplotComponent";
@@ -40,7 +40,7 @@ export default function LinePlot() {
       setPointClicked([]);
       setBaselineUpdated(false);
     }
-  }, [configValue]);
+  }, [configValue, setBaselineUpdated]);
 
   return (
     <Box

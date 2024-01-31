@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, memo } from "react";
+import { useState, useEffect, useCallback, memo } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
 import { usePlotsContext } from "../../../hooks/usePlotsContext";
 import {

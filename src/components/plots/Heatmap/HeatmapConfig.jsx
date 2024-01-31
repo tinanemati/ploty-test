@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import FormControl from "@mui/material/FormControl";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
