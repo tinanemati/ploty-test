@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Lineplotconfig from "./LineplotConfig";
 import LinePlotComponent from "./LineplotComponent";
+import PeakTable from "../../table/PeakTable";
 import { usePlotsContext } from "../../../hooks/usePlotsContext";
 
 export default function LinePlot() {
@@ -66,6 +67,7 @@ export default function LinePlot() {
         setBaselineTimeRange={setBaselineTimeRange}
         setXdataUpdated={setXdataUpdated}
       />
+      <PeakTable />
     </Box>
   );
 }

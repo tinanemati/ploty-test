@@ -7,7 +7,7 @@ import { PlotsProvider } from "./hooks/usePlotsContext";
 function App() {
   return (
     <>
-      <h1 style={{ display: "flex", justifyContent: "center" }}>
+      <h1>
         Scientific Plots
       </h1>
       <Box
@@ -15,8 +15,6 @@ function App() {
           display: "flex",
           flexDirection: "column",
           gap: "10px",
-          justifyContent: "center",
-          alignItems: "center",
         }}
       >
         <PlotsProvider>
