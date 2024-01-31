@@ -2,11 +2,11 @@ import { useState, useEffect, useCallback } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
 import usePlotsContext from "../../../hooks/usePlotsContext";
 import {
-  findMinMaxValues,
   getShape,
   getPlotConfiguration,
   getDefaultBaseline,
 } from "../../../utils/helpers/heatmapHelpers";
+import { findMinMaxValues } from "../../../utils/helpers/appHelpers";
 import PropTypes from "prop-types";
 import axios from "axios";
 
