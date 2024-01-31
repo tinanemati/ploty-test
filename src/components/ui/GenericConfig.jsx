@@ -1,4 +1,3 @@
-import { memo } from "react";
 import PropTypes from "prop-types";
 import FormControl from "@mui/material/FormControl";
 import ToggleButton from "@mui/material/ToggleButton";
@@ -63,4 +62,4 @@ GenericConfig.propTypes = {
   selectedTextColor: PropTypes.string.isRequired,
 };
 
-export default memo(GenericConfig);
+export default GenericConfig;

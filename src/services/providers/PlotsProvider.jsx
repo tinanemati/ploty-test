@@ -37,7 +37,7 @@ export const PlotsProvider = ({ children }) => {
 };
 
 PlotsProvider.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 
 export default PlotsContext; 

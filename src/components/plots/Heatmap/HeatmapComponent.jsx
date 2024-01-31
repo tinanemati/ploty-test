@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, memo } from "react";
+import { useState, useEffect, useCallback } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
 import usePlotsContext from "../../../hooks/usePlotsContext";
 import {
@@ -7,6 +7,7 @@ import {
   getPlotConfiguration,
   getDefaultBaseline,
 } from "../../../utils/helpers/heatmapHelpers";
+import PropTypes from "prop-types";
 import axios from "axios";
 
 function HeatmapComponent({
@@ -36,7 +37,7 @@ function HeatmapComponent({
   useEffect(() => {
     import("plotly.js-cartesian-dist-min").then((Plotly) => {
       const PlotComponent = createPlotlyComponent(Plotly.default || Plotly);
-      setPlot(() => PlotComponent); 
+      setPlot(() => PlotComponent);
     });
   }, []);
 
@@ -205,4 +206,14 @@ function HeatmapComponent({
   );
 }
 
-export default memo(HeatmapComponent);
+HeatmapComponent.propTypes = {
+  configValue: PropTypes.string.isRequired,
+  zMin: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([null])]),
+  zMax: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([null])]),
+  setZMin: PropTypes.func.isRequired,
+  setZMax: PropTypes.func.isRequired,
+  setMinLimit: PropTypes.func.isRequired,
+  setMaxLimit: PropTypes.func.isRequired,
+};
+
+export default HeatmapComponent;

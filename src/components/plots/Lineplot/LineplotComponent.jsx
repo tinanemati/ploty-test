@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
 import usePlotsContext from "../../../hooks/usePlotsContext";
 import {
@@ -274,4 +274,4 @@ function LinePlotComponent({
   return renderLinePlot();
 }
 
-export default memo(LinePlotComponent);
+export default LinePlotComponent;
