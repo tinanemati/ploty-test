@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import Heatmap from "./plots/Heatmap/Heatmap";
-import LinePlot from "./plots/Lineplot/Lineplot";
+import Heatmap from "./components/plots/Heatmap/Heatmap"
+import LinePlot from "./components/plots/Lineplot/Lineplot";
 import { PlotsProvider } from "./hooks/usePlotsContext";
 
 function App() {

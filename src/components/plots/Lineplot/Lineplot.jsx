@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Lineplotconfig from "./LineplotConfig";
 import LinePlotComponent from "./LineplotComponent";
-import { usePlotsContext } from "../../hooks/usePlotsContext";
+import { usePlotsContext } from "../../../hooks/usePlotsContext";
 
 export default function LinePlot() {
   const [configValue, setConfigValue] = useState("Zoom");

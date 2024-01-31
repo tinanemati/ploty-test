@@ -1,4 +1,4 @@
-import { performBaselineCorrection, areaCalculation } from "../../api/axios";
+import { performBaselineCorrection, areaCalculation } from "../../../api/axios";
 
 const getPlotConfiguration = (
   configValue,

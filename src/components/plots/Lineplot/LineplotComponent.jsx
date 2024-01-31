@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useState } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
 import Plotly from "plotly.js-cartesian-dist-min";
-import { usePlotsContext } from "../../hooks/usePlotsContext";
+import { usePlotsContext } from "../../../hooks/usePlotsContext";
 import {
   getPlotConfiguration,
   getYvalues,
