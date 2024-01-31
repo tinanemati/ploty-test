@@ -80,7 +80,7 @@ function LinePlotComponent({
 
   const handleSelected = (event) => {
     if (event.points.length) {
-      console.log("I was called", event);
+      // console.log("I was called", event);
       const xIndex0 = event.points[0].pointIndex;
       const xValue0 = event.points[0].x;
       const length = event.points.length - 1;

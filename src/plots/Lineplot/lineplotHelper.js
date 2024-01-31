@@ -137,7 +137,6 @@ const performAreaHelper = async (
   };
 
   const result = await areaCalculation(dataToSend);
-  console.log(result)
   if (result.success) {
     // update area 
     updateArea(result.area);
