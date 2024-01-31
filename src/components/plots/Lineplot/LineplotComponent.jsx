@@ -1,6 +1,5 @@
 import React, { memo, useCallback, useEffect, useState } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
-import Plotly from "plotly.js-cartesian-dist-min";
 import { usePlotsContext } from "../../../hooks/usePlotsContext";
 import {
   getPlotConfiguration,
@@ -9,9 +8,6 @@ import {
   getBaselineShape,
   performAreaHelper,
 } from "./lineplotHelper";
-
-Plotly.setPlotConfig({ logging: 0 });
-const Plot = createPlotlyComponent(Plotly);
 
 function LinePlotComponent({
   configValue,
@@ -35,6 +31,18 @@ function LinePlotComponent({
     setYdataUpdated,
     sliceSelected,
   } = usePlotsContext();
+
+  // Declare Plot as a state variable
+  const [Plot, setPlot] = useState(null);
+
+  // Use an effect hook to import the module dynamically
+  useEffect(() => {
+    import("plotly.js-cartesian-dist-min").then((Plotly) => {
+      Plotly.setPlotConfig({ logging: 0 });
+      const PlotComponent = createPlotlyComponent(Plotly.default || Plotly);
+      setPlot(() => PlotComponent);
+    });
+  }, []);
 
   const [area, setArea] = useState([]);
   const [range, setRange] = useState([]);
@@ -199,64 +207,68 @@ function LinePlotComponent({
     }
 
     return (
-      <Plot
-        data={[
-          {
-            x: xData,
-            y: yDataChannel,
-            type: "scatter",
-            mode: "lines+markers",
-            marker: {
-              size: size,
-              color: color,
-            },
-            line: {
-              color: "#000",
-              width: 1,
-            },
-          },
-          ...(range.length > 0 && configValue === "Integration"
-            ? range.map((item, index) => ({
-                x: xData.slice(item.pointIndex[0], item.pointIndex[1] + 1),
-                y: yDataUpdated.slice(
-                  item.pointIndex[0],
-                  item.pointIndex[1] + 1
-                ),
+      <>
+        {Plot && (
+          <Plot
+            data={[
+              {
+                x: xData,
+                y: yDataChannel,
                 type: "scatter",
-                mode: "lines",
-                line: {
-                  color: "rgb(238,44,130)",
+                mode: "lines+markers",
+                marker: {
+                  size: size,
+                  color: color,
                 },
-                name: range[index] ? `Region ${index + 1}` : undefined,
-              }))
-            : []),
-        ]}
-        layout={{
-          width: 950,
-          height: 470,
-          title: "Extracted Ion Chromatogram",
-          xaxis: {
-            title: "Retention Time (Minutes)",
-            dtick: 0.5,
-          },
-          yaxis: {
-            title: `Ion Count (m/z=${horizontalLinePosition})`,
-            zeroline: false,
-            fixedrange: yFixed,
-          },
-          dragmode: dragMode,
-          selectdirection: direction,
-          clickmode: clickMode,
-          hovermode: hoverMode,
-          showlegend: false,
-          shapes: baselineShape,
-        }}
-        config={{ scrollZoom: scrollZoom, displayModeBar: false }}
-        onClick={clickHandler}
-        onDoubleClick={doubleClickHandler}
-        onSelected={selectHandler}
-        onDeselect={deSelectHandler}
-      />
+                line: {
+                  color: "#000",
+                  width: 1,
+                },
+              },
+              ...(range.length > 0 && configValue === "Integration"
+                ? range.map((item, index) => ({
+                    x: xData.slice(item.pointIndex[0], item.pointIndex[1] + 1),
+                    y: yDataUpdated.slice(
+                      item.pointIndex[0],
+                      item.pointIndex[1] + 1
+                    ),
+                    type: "scatter",
+                    mode: "lines",
+                    line: {
+                      color: "rgb(238,44,130)",
+                    },
+                    name: range[index] ? `Region ${index + 1}` : undefined,
+                  }))
+                : []),
+            ]}
+            layout={{
+              width: 950,
+              height: 470,
+              title: "Extracted Ion Chromatogram",
+              xaxis: {
+                title: "Retention Time (Minutes)",
+                dtick: 0.5,
+              },
+              yaxis: {
+                title: `Ion Count (m/z=${horizontalLinePosition})`,
+                zeroline: false,
+                fixedrange: yFixed,
+              },
+              dragmode: dragMode,
+              selectdirection: direction,
+              clickmode: clickMode,
+              hovermode: hoverMode,
+              showlegend: false,
+              shapes: baselineShape,
+            }}
+            config={{ scrollZoom: scrollZoom, displayModeBar: false }}
+            onClick={clickHandler}
+            onDoubleClick={doubleClickHandler}
+            onSelected={selectHandler}
+            onDeselect={deSelectHandler}
+          />
+        )}
+      </>
     );
   };
   return renderLinePlot();

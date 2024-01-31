@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
-import { ModuleRegistry } from '@ag-grid-community/core';
-import { AgGridReact } from '@ag-grid-community/react';
+import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
+import { ModuleRegistry } from "@ag-grid-community/core";
+import { AgGridReact } from "@ag-grid-community/react";
 import "@ag-grid-community/styles/ag-grid.css";
 import "@ag-grid-community/styles/ag-theme-balham.css";
 
@@ -20,13 +20,13 @@ export default function PeaksTableComponent() {
     ],
     []
   );
-//   useEffect(() => {
-//     if (regionData.length > 0) {
-//       setRowData(regionData);
-//     } else {
-//       setRowData(null);
-//     }
-//   }, [regionData]);
+  //   useEffect(() => {
+  //     if (regionData.length > 0) {
+  //       setRowData(regionData);
+  //     } else {
+  //       setRowData(null);
+  //     }
+  //   }, [regionData]);
 
   // DefaultColDef sets props common to all Columns
   const defaultColDef = useMemo(
@@ -36,8 +36,18 @@ export default function PeaksTableComponent() {
     []
   );
   return (
-    <div style={{ display: "flex", justifyContent: "center", height: "200px", width: "400px" }}>
-      <div className="ag-theme-balham" style={{ height: "100%", width: "100%" }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        height: "200px",
+        width: "400px",
+      }}
+    >
+      <div
+        className="ag-theme-balham"
+        style={{ height: "100%", width: "100%" }}
+      >
         <AgGridReact
           rowData={rowData}
           columnDefs={columnDefs}

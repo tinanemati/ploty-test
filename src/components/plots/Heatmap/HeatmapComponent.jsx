@@ -1,16 +1,13 @@
 import React, { useState, useEffect, useCallback, memo } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
-import Plotly from "plotly.js-cartesian-dist-min";
 import { usePlotsContext } from "../../../hooks/usePlotsContext";
 import {
   findMinMaxValues,
   getShape,
   getPlotConfiguration,
-  getDefaultBaseline
+  getDefaultBaseline,
 } from "./heatmapHelpers";
 import axios from "axios";
-
-const Plot = createPlotlyComponent(Plotly);
 
 function HeatmapComponent({
   configValue,
@@ -29,8 +26,19 @@ function HeatmapComponent({
     setSliceSelected,
     setBaseline,
     setYdataUpdated,
-    setBaselineUpdated
+    setBaselineUpdated,
   } = usePlotsContext();
+
+  // Declare Plot as a state variable
+  const [Plot, setPlot] = useState(null);
+
+  // Use an effect hook to import the module dynamically
+  useEffect(() => {
+    import("plotly.js-cartesian-dist-min").then((Plotly) => {
+      const PlotComponent = createPlotlyComponent(Plotly.default || Plotly);
+      setPlot(() => PlotComponent); 
+    });
+  }, []);
 
   const [arrayX, setArrayX] = useState([]);
   const [arrayY, setArrayY] = useState([]);
@@ -39,9 +47,15 @@ function HeatmapComponent({
 
   const getBaseline = useCallback(
     (xData, yData) => {
-      getDefaultBaseline(xData, yData, setBaseline, setYdataUpdated, setBaselineUpdated);
+      getDefaultBaseline(
+        xData,
+        yData,
+        setBaseline,
+        setYdataUpdated,
+        setBaselineUpdated
+      );
     },
-    [setBaseline, setYdataUpdated, setBaselineUpdated] 
+    [setBaseline, setYdataUpdated, setBaselineUpdated]
   );
 
   const calculateMinMaxValues = useCallback(
@@ -133,58 +147,60 @@ function HeatmapComponent({
 
   return (
     <>
-      <Plot
-        data={[
-          {
-            z: arrayZ,
-            x: arrayX,
-            y: arrayY,
-            zmax: zMax,
-            zmin: zMin,
-            zauto: false,
-            type: "heatmap",
-            colorscale: "Viridis",
-            colorbar: {
-              len: 0.6,
-              thickness: 20,
-              exponentformat: "power",
-            },
-            hovertemplate: `t: %{x}
+      {Plot && (
+        <Plot
+          data={[
+            {
+              z: arrayZ,
+              x: arrayX,
+              y: arrayY,
+              zmax: zMax,
+              zmin: zMin,
+              zauto: false,
+              type: "heatmap",
+              colorscale: "Viridis",
+              colorbar: {
+                len: 0.6,
+                thickness: 20,
+                exponentformat: "power",
+              },
+              hovertemplate: `t: %{x}
               <br>m/z: %{y}
               <br>intensity: %{z}<extra></extra>`,
-          },
-        ]}
-        layout={{
-          width: 950,
-          height: 470,
-          title: "Total Ion Chromatogram",
-          xaxis: {
-            title: {
-              text: "Retention Time (Minutes)",
             },
-            dtick: 0.5,
-          },
-          yaxis: {
-            autorange: "reversed",
-            title: {
-              text: "(m/z)",
-            },
-          },
-          coloraxis: {
-            colorbar: {
+          ]}
+          layout={{
+            width: 950,
+            height: 470,
+            title: "Total Ion Chromatogram",
+            xaxis: {
               title: {
-                text: "Intensity",
+                text: "Retention Time (Minutes)",
+              },
+              dtick: 0.5,
+            },
+            yaxis: {
+              autorange: "reversed",
+              title: {
+                text: "(m/z)",
               },
             },
-          },
-          shapes: lineSegments,
-          dragmode: dragMode,
-        }}
-        onHover={onHoverHandler}
-        onClick={onClickHandler}
-        onDoubleClick={doubleClickHandler}
-        config={{ scrollZoom: scrollZoom, displayModeBar: false }}
-      />
+            coloraxis: {
+              colorbar: {
+                title: {
+                  text: "Intensity",
+                },
+              },
+            },
+            shapes: lineSegments,
+            dragmode: dragMode,
+          }}
+          onHover={onHoverHandler}
+          onClick={onClickHandler}
+          onDoubleClick={doubleClickHandler}
+          config={{ scrollZoom: scrollZoom, displayModeBar: false }}
+        />
+      )}
     </>
   );
 }
