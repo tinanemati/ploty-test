@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Lineplotconfig from "./LineplotConfig";
 import LinePlotComponent from "./LineplotComponent";
 import PeakTable from "../../table/PeakTable";
-import { usePlotsContext } from "../../../services/providers/context";
+import usePlotsContext from "../../../hooks/usePlotsContext";
 
 export default function LinePlot() {
   const [configValue, setConfigValue] = useState("Zoom");

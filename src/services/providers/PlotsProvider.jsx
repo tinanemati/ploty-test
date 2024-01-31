@@ -1,4 +1,5 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState } from "react";
+import PropTypes from "prop-types";
 
 const PlotsContext = createContext();
 
@@ -35,6 +36,8 @@ export const PlotsProvider = ({ children }) => {
   );
 };
 
-export const usePlotsContext = () => {
-  return useContext(PlotsContext);
+PlotsProvider.propTypes = {
+  children: PropTypes.element,
 };
+
+export default PlotsContext; 

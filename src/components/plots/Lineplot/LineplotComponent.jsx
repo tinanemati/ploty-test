@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
-import { usePlotsContext } from "../../../services/providers/context";
+import usePlotsContext from "../../../hooks/usePlotsContext";
 import {
   getPlotConfiguration,
   getYvalues,
