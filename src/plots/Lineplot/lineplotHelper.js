@@ -82,7 +82,9 @@ const performBaselineCorrectionHelper = async (
   updateBaseline,
   setXdataUpdated,
   setYdataUpdated,
-  setBaselineUpdated
+  setBaselineUpdated,
+  setCalculate,
+  range
 ) => {
   let dataToSend;
   if (start && end) {
@@ -111,6 +113,10 @@ const performBaselineCorrectionHelper = async (
     setYdataUpdated(result.yValues);
     //  identify that baseline calculated
     setBaselineUpdated(true);
+    // identify if we have to calculate area again
+    if (range.length > 0) {
+      setCalculate(true);
+    }
   } else {
     console.error(result.message);
   }
@@ -122,6 +128,7 @@ const performAreaHelper = async (
   xData,
   yData,
   updateArea,
+  updateCalculate,
 ) => {
   let dataToSend = {
     range: range,
@@ -135,6 +142,7 @@ const performAreaHelper = async (
     // update area 
     updateArea(result.area);
     console.log("this is area:", result.area)
+    updateCalculate(false);
   } else {
     console.error(result.message);
   }

@@ -7,7 +7,7 @@ import {
   getYvalues,
   performBaselineCorrectionHelper,
   getBaselineShape,
-  performAreaHelper
+  performAreaHelper,
 } from "./lineplotHelper";
 
 Plotly.setPlotConfig({ logging: 0 });
@@ -38,10 +38,19 @@ function LinePlotComponent({
 
   const [area, setArea] = useState([]);
   const [range, setRange] = useState([]);
+  const [calculate, setCalculate] = useState(false);
   // Function to update the range at a specific index
-  const updateRange = (newLeftIndex, newleftValue, newRightIndex, newRightValue) => {
+  const updateRange = (
+    newLeftIndex,
+    newleftValue,
+    newRightIndex,
+    newRightValue
+  ) => {
     const updatedRanges = [...range];
-    updatedRanges.push({ pointIndex: [newLeftIndex, newRightIndex], x: [newleftValue, newRightValue] });
+    updatedRanges.push({
+      pointIndex: [newLeftIndex, newRightIndex],
+      x: [newleftValue, newRightValue],
+    });
     setRange(updatedRanges);
   };
   console.log("this is range:", range);
@@ -78,23 +87,26 @@ function LinePlotComponent({
       const xIndex1 = event.points[length].pointIndex;
       const xValue1 = event.points[length].x;
       updateRange(xIndex0, xValue0, xIndex1, xValue1);
+      // state that we should calculate area
+      setCalculate(true);
     }
   };
 
   const handleDeselct = () => {
-    setRange([])
-    setArea([])
-  }
+    setRange([]);
+    setArea([]);
+    setCalculate(false);
+  };
 
-  // Hook that will perform area 
+  // Hook that will perform area
   useEffect(() => {
-    if (range.length > 0) {
+    if (sliceSelected && calculate && baselineUpdated) {
       const areaCalculation = () => {
-        performAreaHelper(range, xData, yDataUpdated, setArea);
-      };  
+        performAreaHelper(range, xData, yDataUpdated, setArea, setCalculate);
+      };
       areaCalculation();
     }
-  }, [range.length])
+  }, [baselineUpdated, sliceSelected, calculate]);
 
   const getBaselineCorrection = useCallback(
     (start, end) => {
@@ -106,7 +118,9 @@ function LinePlotComponent({
         setBaseline,
         setXdataUpdated,
         setYdataUpdated,
-        setBaselineUpdated
+        setBaselineUpdated,
+        setCalculate,
+        range
       );
     },
     [
@@ -116,6 +130,8 @@ function LinePlotComponent({
       setYdataUpdated,
       setBaselineUpdated,
       setXdataUpdated,
+      setCalculate,
+      range,
     ]
   );
 
@@ -201,8 +217,11 @@ function LinePlotComponent({
           },
           ...(range.length > 0 && configValue === "Integration"
             ? range.map((item, index) => ({
-                x: xData.slice(item.pointIndex[0], item.pointIndex[1]+1),
-                y: yDataUpdated.slice(item.pointIndex[0], item.pointIndex[1]+1),
+                x: xData.slice(item.pointIndex[0], item.pointIndex[1] + 1),
+                y: yDataUpdated.slice(
+                  item.pointIndex[0],
+                  item.pointIndex[1] + 1
+                ),
                 type: "scatter",
                 mode: "lines",
                 line: {
