@@ -7,6 +7,7 @@ import {
   getYvalues,
   performBaselineCorrectionHelper,
   getBaselineShape,
+  performAreaHelper
 } from "./lineplotHelper";
 
 Plotly.setPlotConfig({ logging: 0 });
@@ -35,6 +36,7 @@ function LinePlotComponent({
     sliceSelected,
   } = usePlotsContext();
 
+  const [area, setArea] = useState([]);
   const [range, setRange] = useState([]);
   // Function to update the range at a specific index
   const updateRange = (newLeftIndex, newleftValue, newRightIndex, newRightValue) => {
@@ -81,7 +83,19 @@ function LinePlotComponent({
 
   const handleDeselct = () => {
     setRange([])
+    setArea([])
   }
+
+  // Hook that will perform area 
+  useEffect(() => {
+    if (range.length > 0) {
+      const areaCalculation = () => {
+        performAreaHelper(range, xData, yDataUpdated, setArea);
+      };  
+      areaCalculation();
+    }
+  }, [range.length])
+
   const getBaselineCorrection = useCallback(
     (start, end) => {
       performBaselineCorrectionHelper(

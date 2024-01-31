@@ -26,4 +26,23 @@ const performBaselineCorrection = async (dataToSend) => {
   }
 };
 
-export { performBaselineCorrection };
+const areaCalculation = async (dataToSend) => {
+  console.log("I was called", dataToSend)
+  // POST request to the backend with the range and values to calculate areas
+  try {
+    const response = await axios.post("http://127.0.0.1:7000/area",dataToSend);
+    console.log("this is response", response)
+    if(!response.data.error) {
+      return {
+        success: true,
+        area: response.data.area
+      }
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to calculate area. Please try again"
+    }
+  }
+}
+export { performBaselineCorrection, areaCalculation };

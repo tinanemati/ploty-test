@@ -85,10 +85,10 @@ class Plots():
             time_range (list): Array containing time duration for the specified region of interest.
         """
 
-        area = []
+        area = {}
         # retreive slicing indecies from range
         for peak in time_range:
-            peak_start, peak_end = peak["leftside"], peak["rightside"]
+            peak_start, peak_end = peak["pointIndex"][0], peak["pointIndex"][1]
             # slice the x,y data axis given the peak start and end index
             xDataRange = times[peak_start:peak_end]
             yDataRange = values[peak_start:peak_end]
@@ -97,6 +97,7 @@ class Plots():
                 y=yDataRange,
                 x=xDataRange
             )
-            area.append(peak_area)
+            peak_index = str(peak["pointIndex"])
+            area[peak_index] = peak_area
 
         return area

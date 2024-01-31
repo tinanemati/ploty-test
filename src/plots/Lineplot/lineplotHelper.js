@@ -1,4 +1,4 @@
-import { performBaselineCorrection } from "../../api/axios";
+import { performBaselineCorrection, areaCalculation } from "../../api/axios";
 
 const getPlotConfiguration = (
   configValue,
@@ -116,6 +116,29 @@ const performBaselineCorrectionHelper = async (
   }
 };
 
+// Helper function that will make the call to backend and return data
+const performAreaHelper = async (
+  range,
+  xData,
+  yData,
+  updateArea,
+) => {
+  let dataToSend = {
+    range: range,
+    xData: xData,
+    yData: yData,
+  };
+
+  const result = await areaCalculation(dataToSend);
+  console.log(result)
+  if (result.success) {
+    // update area 
+    updateArea(result.area);
+    console.log("this is area:", result.area)
+  } else {
+    console.error(result.message);
+  }
+};
 // helper function to get the shape of baseline
 function getBaselineShape(xData, baseline, pointClicked) {
   return [
@@ -145,4 +168,5 @@ export {
   getYvalues,
   performBaselineCorrectionHelper,
   getBaselineShape,
+  performAreaHelper
 };
