@@ -1,12 +1,12 @@
 import { useState, useEffect, useCallback, memo } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
-import { usePlotsContext } from "../../../hooks/usePlotsContext";
+import { usePlotsContext } from "../../../services/providers/context";
 import {
   findMinMaxValues,
   getShape,
   getPlotConfiguration,
   getDefaultBaseline,
-} from "./heatmapHelpers";
+} from "../../../utils/helpers/heatmapHelpers";
 import axios from "axios";
 
 function HeatmapComponent({

@@ -1,13 +1,13 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
-import { usePlotsContext } from "../../../hooks/usePlotsContext";
+import { usePlotsContext } from "../../../services/providers/context";
 import {
   getPlotConfiguration,
   getYvalues,
   performBaselineCorrectionHelper,
   getBaselineShape,
   performAreaHelper,
-} from "./lineplotHelper";
+} from "../../../utils/helpers/lineplotHelper";
 
 function LinePlotComponent({
   configValue,
