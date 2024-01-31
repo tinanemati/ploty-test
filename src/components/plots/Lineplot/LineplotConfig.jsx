@@ -1,4 +1,5 @@
 import GenericConfig from "../../ui/GenericConfig";
+import PropTypes from "prop-types";
 
 function Lineplotconfig({ configValue, updateConfigValue }) {
   const options = ["Zoom", "Integration", "Baseline", "Reset"];
@@ -15,5 +16,10 @@ function Lineplotconfig({ configValue, updateConfigValue }) {
     />
   );
 }
+
+Lineplotconfig.propTypes = {
+  configValue: PropTypes.string.isRequired,
+  updateConfigValue: PropTypes.func.isRequired,
+};
 
 export default Lineplotconfig;

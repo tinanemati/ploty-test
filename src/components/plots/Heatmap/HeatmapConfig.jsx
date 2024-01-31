@@ -1,4 +1,5 @@
 import GenericConfig from "../../ui/GenericConfig";
+import PropTypes from "prop-types";
 
 function Heatmapconfig({ configValue, updateConfigValue }) {
   const options = [
@@ -21,5 +22,10 @@ function Heatmapconfig({ configValue, updateConfigValue }) {
     />
   );
 }
+
+Heatmapconfig.propTypes = {
+  configValue: PropTypes.string.isRequired,
+  updateConfigValue: PropTypes.func.isRequired,
+};
 
 export default Heatmapconfig;
