@@ -26,3 +26,6 @@ dist-ssr
 
 ### Flask.Python Stack ###
 __pycache__/
+
+### Performance statictic
+stats.html
