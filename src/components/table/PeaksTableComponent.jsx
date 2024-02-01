@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 import { ModuleRegistry } from "@ag-grid-community/core";
 import { AgGridReact } from "@ag-grid-community/react";
@@ -8,7 +8,7 @@ import "@ag-grid-community/styles/ag-theme-balham.css";
 // Register the required feature modules with the Grid
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
-export default function PeaksTableComponent() {
+export default function PeaksTableComponent({regionData}) {
   // we need to get time range and calculated areas from the LinePlot
   const [rowData, setRowData] = useState();
   const columnDefs = useMemo(
@@ -20,13 +20,13 @@ export default function PeaksTableComponent() {
     ],
     []
   );
-  //   useEffect(() => {
-  //     if (regionData.length > 0) {
-  //       setRowData(regionData);
-  //     } else {
-  //       setRowData(null);
-  //     }
-  //   }, [regionData]);
+    useEffect(() => {
+      if (regionData.length > 0) {
+        setRowData(regionData);
+      } else {
+        setRowData(null);
+      }
+    }, [regionData]);
 
   // DefaultColDef sets props common to all Columns
   const defaultColDef = useMemo(
