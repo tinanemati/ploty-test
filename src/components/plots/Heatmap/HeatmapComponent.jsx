@@ -74,7 +74,7 @@ function HeatmapComponent({
   // Hook to get data from flask server
   useEffect(() => {
     const fetchWellData = async () => {
-      const response = await axios.get("http://127.0.0.1:7000/well");
+      const response = await axios.get("/api/well");
       const wellData = response.data.wellData;
       // update the states used for rendering
       setArrayX(wellData.columns);

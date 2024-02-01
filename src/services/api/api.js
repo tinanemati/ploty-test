@@ -5,7 +5,7 @@ const performBaselineCorrection = async (dataToSend) => {
   // POST request to backend with yData to calculate simple basline
   try {
     const response = await axios.post(
-      "http://127.0.0.1:7000/baselineCorrection",
+      "/api/baselineCorrection",
       dataToSend
     );
     if (!response.data.error) {
@@ -29,7 +29,7 @@ const performBaselineCorrection = async (dataToSend) => {
 const areaCalculation = async (dataToSend) => {
   // POST request to the backend with the range and values to calculate areas
   try {
-    const response = await axios.post("http://127.0.0.1:7000/area",dataToSend);
+    const response = await axios.post("/api/area",dataToSend);
     if(!response.data.error) {
       return {
         success: true,
