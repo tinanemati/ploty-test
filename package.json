@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
+    "preview": "concurrently \"npm run start-flask\" \"vite preview\"",
     "start": "concurrently \"npm run start-flask\" \"npm run start-vite\"",
     "start-flask": "python server/server.py",  
     "start-vite": "vite"
