@@ -18,6 +18,7 @@ function LinePlotComponent({
   baselineTimeRange,
   xDataUpdated,
   setXdataUpdated,
+  setRegionData,
 }) {
   const {
     yData,
@@ -110,7 +111,7 @@ function LinePlotComponent({
   useEffect(() => {
     if (sliceSelected && calculate && baselineUpdated) {
       const areaCalculation = () => {
-        performAreaHelper(range, xData, yDataUpdated, setArea, setCalculate);
+        performAreaHelper(range, xData, yDataUpdated, setArea, setCalculate, setRegionData);
       };
       areaCalculation();
     }

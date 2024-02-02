@@ -10,6 +10,7 @@ export default function LinePlot() {
   const [baselineTimeRange, setBaselineTimeRange] = useState([]);
   const [pointClicked, setPointClicked] = useState([]);
   const [xDataUpdated, setXdataUpdated] = useState([]);
+  const [regionData, setRegionData] = useState([]);
   const { setBaselineUpdated, sliceSelected } = usePlotsContext();
   // Function that will update the baseline range
   const updateBaselineTimeRange = (pointX) => {
@@ -65,8 +66,9 @@ export default function LinePlot() {
         setPointClicked={setPointClicked}
         setBaselineTimeRange={setBaselineTimeRange}
         setXdataUpdated={setXdataUpdated}
+        setRegionData={setRegionData}
       />
-      <PeakTable />
+      <PeakTable regionData={regionData}/>
     </Box>
   );
 }

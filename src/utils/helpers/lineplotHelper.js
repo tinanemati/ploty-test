@@ -129,6 +129,7 @@ const performAreaHelper = async (
   yData,
   updateArea,
   updateCalculate,
+  updateRegionData,
 ) => {
   let dataToSend = {
     range: range,
@@ -142,6 +143,27 @@ const performAreaHelper = async (
     updateArea(result.area);
     console.log("this is area:", result.area)
     updateCalculate(false);
+    // update region 
+    const updatedRegions = range.map((item, index) => {
+      const regionName = `Region ${index + 1}`;
+      const channel = "MS";
+      const power = Math.pow(10, 3);
+      const { pointIndex, x } = item;
+      const indexRange = `[${pointIndex[0]}, ${pointIndex[1]}]`;
+      const calculatedArea = result.area[indexRange];
+      const start_time = Math.trunc(x[0] * power) / power;
+      const end_time = Math.trunc(x[1] * power) / power;
+      const timeRange = `[${start_time}, ${end_time})`;
+
+      return {
+        Name: regionName,
+        Channel: channel,
+        TimeRange: timeRange,
+        CalculatedArea: calculatedArea,
+      };
+    });
+
+    updateRegionData(updatedRegions);
   } else {
     console.error(result.message);
   }
